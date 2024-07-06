@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "finance"
+version = "0.1.0"
+description = "personal RAG project"
+authors = ["IsaiasZc <coroxerox2@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-dotenv = "^1.0.1"
+playwright = "^1.45.0"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyterlab = "^4.2.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
