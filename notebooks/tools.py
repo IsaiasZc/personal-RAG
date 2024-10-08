@@ -50,6 +50,14 @@ def _get_general_info(soup, recipes) -> dict:
     )
     tdificulty = clean(e_tdificulty.get_text()) if e_tdificulty else "N/A"
 
+    ingredients = _get_ingredients(soup)
+    ingredients = ingredients if ingredients else "N/A"
+    # if begins with "- " delete that
+    if ingredients.startswith("- "):
+        ingredients = ingredients[2:]
+    # the current structure is a string -{ingrediente}\n, I need a list of ingredients separated by commas
+    ingredients = ingredients.split("\n- ")
+
     general_info = {
         "categories": categories,
         "categories_slug": categories_slug,
@@ -57,6 +65,7 @@ def _get_general_info(soup, recipes) -> dict:
         "preparation_time": tpreparacion,
         "cooking_time": tcocinar,
         "difficulty": tdificulty,
+        "ingredients": ', '.join(ingredients),
     }
 
 
@@ -111,7 +120,7 @@ def _get_description(soup) -> str:
     # Selector CSS para obtener todo el texto y luego procesarlo
     intro_text_full = soup.select_one('.recipe-intro-receta-normal')
 
-    if not intro_text_full.get_text():
+    if not intro_text_full:
         return None
     # Here you could clean the text by removing the parts you are not interested in
     # Example: cutting at the first appearance of 'Revisado por'
